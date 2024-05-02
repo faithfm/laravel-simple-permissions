@@ -1,0 +1,39 @@
+{
+    "name": "faithfm/laravel-simple-permissions",
+    "description": "Simple user permissions for Laravel (Eloquent-based authorisation gates)",
+    "type": "library",
+    "homepage": "https://github.com/faithfm/laravel-simple-permissions",
+    "keywords": [
+        "template",
+        "composer",
+        "package"
+    ],
+    "license": "GPL-3.0-or-later",
+    "authors": [{
+            "name": "Michael Engelbrecht",
+            "email": "michaelndani@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.0|^8.0",
+        "illuminate/support": ">5.0",
+        "laravel/framework": ">5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "FaithFM\\SimplePermissions\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FaithFM\\SimplePermissions\\SimplePermissionsServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
