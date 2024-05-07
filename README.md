@@ -25,15 +25,21 @@ A simple way to define user permissions in your Laravel application:
     @can('use-app')                                 // blade templates
     ```
 
-    > Notice the special '|' character that can be used to test multiple (ORed) permissions in a single gate
+> [!TIP]
+>
+> Notice the special '|' character that can be used to test multiple (ORed) permissions in a single gate
 
 * Permissions are assigned to each user via the `user_permissions` table:
 
-    <img align="left" src="docs/user_permissions-table.jpeg" alt="user_permissions-table" />
+    ![user permissions table](docs/user_permissions-table.jpeg)
 
 * Additional Javascript library included - typically used to check additional restrictions in the front-end.  (see below)
 
-*Note: This package is the Authorization (AuthZ) component of our overall AuthN/AuthZ design pattern that we deploy for our apps.  (Our [Faith FM Laravel Auth0 Pattern](https://github.com/faithfm/laravel-auth0-pattern) package is more opinionated than this generic package, and includes a number of published template files that may be less helpful for a wider audience, but you're welcome to use them if they are helpful.)*
+> 
+
+> [!NOTE]
+>
+> *This package is the Authorization (AuthZ) component of our overall AuthN/AuthZ design pattern that we deploy for our apps.  (Our [Faith FM Laravel Auth0 Pattern](https://github.com/faithfm/laravel-auth0-pattern) package is more opinionated than this generic package, and includes a number of published template files that may be less helpful for a wider audience, but you're welcome to use them if they are helpful.)*
 
 
 
@@ -48,6 +54,11 @@ php artisan migrate                                        # create the 'user_pe
 * Add the *permissions* relationship to the `Models\User.php` model:
 
 ```php
+/**
+ * The permissions relationship should be eager-loaded.
+ */
+protected $with = ['permissions'];
+
 /**
  * Get the permissions for the user.
  */
@@ -83,7 +94,7 @@ In the examples below we will primarily consider the fourth row of the sample `u
 id:            2
 user_id:       2
 permission:    use-app
-restrictions:  {"fields":["content","guests"],"filter":"file:sa/*"}
+restrictions:  {"fields":["content","guests"],"filter":"file:folder/*"}
 ```
 
 Simple permission checks use the `laravelUserCan()` function:
@@ -125,7 +136,10 @@ if (restrictions.status == "SOME PERMITTED") {
     // DO STUFF IF FILTER ALLOWS
 ```
 
-> REMINDER: You should not rely solely on front-end code to enforce important security features.  These should be performed in the back-end as well.
+
+> [!IMPORTANT]
+>
+>  You should not rely solely on front-end code to enforce important security features.  These should be performed in the back-end as well.
 
 
 
