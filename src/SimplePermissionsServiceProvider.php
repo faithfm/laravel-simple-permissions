@@ -14,17 +14,17 @@ class SimplePermissionsServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Load database migrations
-        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
-        
+        $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
+
         // Publish everything contained in the "templates" folder
         //   > php artisan vendor:publish --tag=laravel-simple-permissions
         $this->publishes([
-            __DIR__.'/../templates/' => base_path(),
+            __DIR__ . '/../templates/' => base_path(),
         ], 'laravel-simple-permissions');
-        
+
         // Define gates for 'defined_permissions' in config/auth.php
         $this->registerPermissionGates();
-    }    
+    }
 
     /**
      * Define gates for 'defined_permissions' in config/auth.php
@@ -33,9 +33,12 @@ class SimplePermissionsServiceProvider extends ServiceProvider
      * single gate that checks for multiple permissions.
      * This gate allows us to use the '|' character to check for multiple (ORed) permissions in a single gate.
      */
-    public function registerPermissionGates() 
-    { 
+    public function registerPermissionGates()
+    {
         Gate::after(function (User $user, string $ability, bool|null $result, mixed $arguments) {
+            // No need to perform any checks if an earlier gate check has already allowed access
+            if ($result === true) return true;
+
             // Explode the ability into parts - ie: 'edit-post|delete-post' -> ['edit-post', 'delete-post']
             $abilities = explode('|', $ability);
 
