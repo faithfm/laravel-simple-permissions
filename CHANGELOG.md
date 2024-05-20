@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 No unreleased changes
 
+## 1.0.2 - 2024-05-20
+
+Bug-fix: Gate should check for not-null instead of true
+
 ## 1.0.1 - 2024-05-10
 
 Bug-fixes and documentation:

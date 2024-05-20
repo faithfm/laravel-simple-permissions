@@ -36,8 +36,8 @@ class SimplePermissionsServiceProvider extends ServiceProvider
     public function registerPermissionGates()
     {
         Gate::after(function (User $user, string $ability, bool|null $result, mixed $arguments) {
-            // No need to perform any checks if an earlier gate check has already allowed access
-            if ($result === true) return true;
+            // No need to perform any checks if an earlier gate check has already returned a non-null result
+            if ($result !== null) return $result;
 
             // Explode the ability into parts - ie: 'edit-post|delete-post' -> ['edit-post', 'delete-post']
             $abilities = explode('|', $ability);
